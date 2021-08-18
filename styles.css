@@ -1,0 +1,92 @@
+:root{
+    --default-dragon:rgb(190, 190, 190);
+}
+body{
+    box-sizing: border-box;
+}
+main h1{
+    text-align: center;
+    text-transform: uppercase;
+}
+
+main{
+    min-width:300px;
+    max-width:1000px;
+    margin:auto;
+}
+
+.arena{
+    display:grid;
+    background-color: grey;
+    grid-template-rows: 1fr 1fr;
+    gap: 5px;
+    justify-items: center;
+    border:5px solid grey;
+    border-radius: 10px;
+    overflow: hidden;
+}
+@media screen and (min-width:700px) {
+    .arena{
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr;
+    }
+}
+
+.player, .computer{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap:20px;
+    padding:20px 0;
+    width:100%;
+}
+.player{
+    background-color:white;
+}
+.computer{
+    background-color: black;
+}
+
+.one, .three{
+    justify-self: end;
+}
+.two, .four{
+    justify-self: start;
+}
+.dragon{
+    height:210px;
+    width:150px;
+    background-color:var(--default-dragon);
+    border:2px black solid;
+    border-radius: 10px;
+    display:grid;
+    grid-template-areas: "element element element"
+                        "hp attack defense"
+                        "img img img";
+    justify-items: center;
+    padding:5px;
+}
+.dragon h2{
+    text-transform: uppercase;
+    grid-area: element;
+    margin:0;
+    gap:5px;
+    
+}
+.dragon h3{
+    margin:0;
+}
+.dragon .hp{
+    grid-area: hp;
+}
+.dragon .attack{
+    grid-area: attack;
+}
+.dragon .defense{
+    grid-area: defense;
+}
+.dragon svg{
+    grid-area: img;
+}
+
+
