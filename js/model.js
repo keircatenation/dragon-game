@@ -24,7 +24,7 @@ const model = {
 	dragonFactory:function(elem,maxHP, id, fill, fillDark, fillSat, attackStat, defenseStat){
 		return {
 			id,
-            hp:model.makeRandomNumber(5)*Number(maxHP),
+            hp:model.makeRandomNumber(1,5)*maxHP,
             attack:Number(attackStat),
             defense: Number(defenseStat),
 			type:elem,
@@ -34,11 +34,8 @@ const model = {
 	newElement(name, color){
 		this.elements.push([name, color])
 	},
-    makeRandomNumber: function(max){
-        let num = Math.floor(Math.random() * max);
-        if (num == 0) {
-            num = this.makeRandomNumber(max);
-        }
+    makeRandomNumber: function(min,max){
+		let num = Math.floor(Math.random() * (max - min+1)+min);
         return num;
     },
     dragonSVG: function(id,light="#ffffff", dark="#000000", saturated="#717171"){

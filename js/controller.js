@@ -6,9 +6,9 @@ const controller = {
         viewCompTeam.init()
         // viewAdmin.init();
     },
-    addDragon: function(elem, maxHP, fill, fillDark, fillSat, attack, defense){
+    addDragon: function(elem, fill, fillDark, fillSat, attack, defense){
         let id = model.playerTeam.length;
-        model.addDragonToTeam(elem, maxHP,id,fill, fillDark, fillSat, attack, defense)
+        model.addDragonToTeam(elem, this.getRandomNumber(10,20),id,fill, fillDark, fillSat, attack, defense)
         viewPlayerTeam.render();
     },
     dispatch:function(event,id){
@@ -23,8 +23,8 @@ const controller = {
     getIcon: function(id, fill, fillDark, fillSat){
 		return model.dragonSVG(id, fill, fillDark, fillSat);
 	},
-    getRandomNumber: function(max){
-        return model.makeRandomNumber(max);
+    getRandomNumber: function(min,max){
+        return model.makeRandomNumber(min,max);
     },
     submitDragonType: function(name, color){
 		model.newElement(name, color)
