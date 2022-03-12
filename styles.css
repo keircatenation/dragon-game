@@ -3,15 +3,19 @@
 }
 body{
     box-sizing: border-box;
+    font-family: 'Press Start 2P', cursive;
 }
 main h1{
     text-align: center;
     text-transform: uppercase;
 }
+p{
+    font-family: 'Open Sans', sans-serif;;
+}
 
 main{
-    min-width:300px;
-    max-width:1000px;
+    min-width:900px;
+    max-width:1200px;
     margin:auto;
 }
 
@@ -20,10 +24,9 @@ nav{
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    margin:10px auto;
 }
 nav button{
-    margin:0 10px;
+    margin:5px 10px;
     font-size: 1rem;
     text-transform: capitalize;
     padding: 10px;
@@ -31,41 +34,32 @@ nav button{
     border: 2px solid black;
     background-color: white;
     cursor: pointer;
+    font-family: 'Press Start 2P', cursive;
 }
 .disabled{
     cursor:not-allowed;
+    filter:saturate(.4);
 }
 
 .arena{
     display:grid;
     background-color: grey;
-    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 5px;
     justify-items: center;
     border:5px solid grey;
     border-radius: 10px;
     overflow: hidden;
 }
-@media screen and (min-width:700px) {
-    .arena{
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: 1fr;
-    }
-}
 
 .player, .computer{
-    display:grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    gap:20px;
-    padding:20px 0;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
     width:100%;
 }
-.player{
-    background-color:white;
-}
-.computer{
-    background-color: black;
+.support{
+    background-color: gray;
 }
 
 .one, .three{
@@ -75,15 +69,16 @@ nav button{
     justify-self: start;
 }
 .dragon{
-    height:210px;
-    width:150px;
+    height:100px;
+    width:250px;
     background-color:var(--default-dragon);
     border:2px black solid;
     border-radius: 10px;
     display:grid;
-    grid-template-areas: "element element element"
-                        "hp attack defense"
-                        "img img img";
+    grid-template-columns: 1fr 1fr 100px;
+    grid-template-areas: "element element img"
+                        "hp hp img"
+                        "attack defense img";
     justify-items: center;
     padding:5px;
 }
@@ -92,10 +87,12 @@ nav button{
     grid-area: element;
     margin:0;
     gap:5px;
-    
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1rem;
 }
 .dragon h3{
     margin:0;
+    font-size: .7rem;
 }
 .dragon .hp{
     grid-area: hp;
@@ -108,6 +105,7 @@ nav button{
 }
 .dragon svg{
     grid-area: img;
+    max-height: 100%;
 }
 
 

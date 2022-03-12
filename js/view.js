@@ -39,6 +39,7 @@ const viewDragons = {
 		this.nav.append(addElementButton);
 	},
 }
+
 const viewCompTeam = {
     init: function(){
         this.compCards = [document.querySelector("#computer-1"), document.querySelector("#computer-2"), document.querySelector("#computer-3"), document.querySelector("#computer-4")]
@@ -48,13 +49,14 @@ const viewCompTeam = {
     render: function(){
         this.compCards.forEach(card => {
             card.innerHTML = `<h2>?</h2>
-            <h3 class="hp">HP: ?</h3>
-            <h3 class="attack">A: ?</h3>
-            <h3 class="defense">D: ?</h3>
-            ${controller.getIcon(`comp-${this.compCards.indexOf(card, 0)}`, "#ffffff", "#000000", "#717171")}`
+            ${controller.getIcon(`comp-${this.compCards.indexOf(card, 0)}`, "#ffffff", "#000000", "#717171")}
+            <h3 class="hp">HP: ? / ?</h3>
+            <h3 class="attack">? ATK</h3>
+            <h3 class="defense">? DEF</h3>`
         })
-    }
+    },
 }
+
 const viewPlayerTeam = {
     init: function(){
         this.firstDragon = document.querySelector("#player-1")
@@ -68,10 +70,10 @@ const viewPlayerTeam = {
         dragonSquare.style.border = `2px solid ${dragon.colors[1]}`;
         dragonSquare.style.color = `${dragon.colors[1]}`
         dragonSquare.innerHTML = `<h2>${dragon.type}</h2>
-            <h3 class="hp">HP: ${dragon.hp}</h3>
-            <h3 class="attack">A: ${dragon.attack}</h3>
-            <h3 class="defense">D: ${dragon.defense}</h3>
-            ${controller.getIcon(dragon.id, dragon.colors[0], dragon.colors[1], dragon.colors[2])}`
+            <h3 class="hp">HP: ${dragon.hp} / ${dragon.hp}</h3>
+            ${controller.getIcon(dragon.id, dragon.colors[0], dragon.colors[1], dragon.colors[2])}
+            <h3 class="attack">${dragon.attack} ATK</h3>
+            <h3 class="defense">${dragon.defense} DEF</h3>`
     },
     render: function(){
         let team = controller.getPlayerDragons();
