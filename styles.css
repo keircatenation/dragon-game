@@ -1,16 +1,9 @@
 :root{
     --default-dragon:rgb(190, 190, 190);
 }
-body{
-    box-sizing: border-box;
-    font-family: 'Press Start 2P', cursive;
-}
 main h1{
     text-align: center;
     text-transform: uppercase;
-}
-p{
-    font-family: 'Open Sans', sans-serif;;
 }
 
 main{
@@ -39,17 +32,6 @@ nav button{
 .disabled{
     cursor:not-allowed;
     filter:saturate(.4);
-}
-
-.arena{
-    display:grid;
-    background-color: grey;
-    grid-template-columns: 1fr 1fr;
-    gap: 5px;
-    justify-items: center;
-    border:5px solid grey;
-    border-radius: 10px;
-    overflow: hidden;
 }
 
 .player, .computer{
