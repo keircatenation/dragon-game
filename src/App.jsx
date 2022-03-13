@@ -5,23 +5,22 @@ import Enemy from './components/Enemy/Enemy'
 import Player from './components/Player/Player'
 
 function App() {
+  const [enemy, setEnemy] = useState({});
+  const [player, setPlayer] = useState({
+    level:1,
+    weapons:[
+      {name: "quarterstaff", attack:0, damage: 6}
+    ],
+    health:10,
+    maxhp:10,
+    armor:10,
+  })
   const [enemyHealth, setEnemyHealth] = useState(100);
-  const [playerHealth, setPlayerHealth] = useState(100);
 
   function attack(){
-    playerAttack();
-    setTimeout(()=>{
-      enemyAttack();
-    }, 500)
+    console.log("attack!")
   }
-  function playerAttack(){
-    let roll = Math.floor(Math.random()*4+1);
-    setEnemyHealth(enemyHealth-roll);
-  }
-  function enemyAttack(){
-    let roll = Math.floor(Math.random()*4+1);
-    setPlayerHealth(playerHealth-roll);
-  }
+  
 
   return (
     <div className="App">
@@ -30,9 +29,10 @@ function App() {
       </header>
       <section className="arena">
         <Enemy
+          enemy={enemy}
           enemyHealth={enemyHealth}/>
         <Player
-          playerHealth={playerHealth}
+          player={player}
           attack={attack}/>
       </section>
     </div>
