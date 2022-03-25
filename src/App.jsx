@@ -11,7 +11,8 @@ function App() {
     armor:10,
     health:10,
     maxhp:10,
-    actions:[]
+    actions:[],
+    challenge:1
   });
   const [player, setPlayer] = useState({
     level:1,
@@ -33,24 +34,33 @@ function App() {
 
   function getEnemy(challenge=1){
     try {
+      // this fetches a list of DND monsters of the inputted challenge level; the automatic level will be 1, since that's where we're starting the player off
       fetch(`https://www.dnd5eapi.co/api/monsters?challenge_rating=${challenge}`)
       .then(resp => resp.json())
       .then(data => {
         let count = data.count;
         let index = Math.floor(Math.random()*count);
         let url = data.results[index].url;
-        console.log(url);
 
+        // this grabs the random monster decided bu the Math.random() above
         fetch(`https://www.dnd5eapi.co${url}`)
           .then(resp => resp.json())
           .then(data => {
+            let actions = data.actions.filter(action => {
+              if (action.damage.length > 0){
+                return action;
+              }
+            })
+            console.log(actions);
+            // sets the information of the Enemy
             setEnemy({
               name:data.name,
               alignment:data.alignment,
               armor:data.armor_class,
               health:data.hit_points,
               maxhp:data.hit_points,
-              actions:data.actions
+              actions,
+              challenge
             })
           })
 
@@ -59,8 +69,6 @@ function App() {
       console.log(err);
     }
   }
-
-  
 
   return (
     <div className="App">

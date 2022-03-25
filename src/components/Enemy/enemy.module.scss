@@ -1,6 +1,6 @@
 .root{
-    min-height:45vh;
     display: grid;
+    overflow:auto;
     .main{
         background-color: aliceblue;
         margin:5px 5px 0;
@@ -23,13 +23,34 @@
             grid-column: 1/-1;
             align-self: stretch;
             background-color: black;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap:10px;
+            display:grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: auto 1fr;
             color: aliceblue;
-            svg{
-                max-height:30vh;
+            .challenge{
+                margin:10px;
+                grid-row: 1;
+                justify-self: center;
+                display: flex;
+                flex-direction: row;
+                svg{
+                    max-height:4vh;
+                    height:100%;
+                }
+            }
+            .info{
+                padding:0 1rem 1rem;
+                display:grid;
+                grid-template-rows: auto 1fr;
+                .text{
+                    margin:0;
+                    padding:0;
+                    display: block;
+                    h2{
+                        text-align: center;
+                        margin-top:0;
+                    }
+                }
             }
         }
     }

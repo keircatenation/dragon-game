@@ -1,10 +1,9 @@
-import styles from './enemy.module.scss'
-import Dragon from '../Dragon/Dragon'
-import { useEffect } from 'react/cjs/react.production.min';
+import styles from './enemy.module.scss';
+import Dragon from '../Dragon/Dragon';
+import Actions from '../Actions/Actions';
 
 export default function Enemy(props) {
-    const {name, alignment, armor, health, maxhp, actions} = props.enemy;
-    console.log("actions ", actions)
+    const {name, alignment, armor, health, maxhp, actions, challenge} = props.enemy;
 
     return (
         <div className={styles.root}>
@@ -17,13 +16,18 @@ export default function Enemy(props) {
                     value={health}>{health}/100
                 </meter>
                 <div className={styles.enemy}>
-                    <div>
-                        <h2>{name}</h2>
-                        <p>Alignment: {alignment}</p>
-                        <p>Armor class: {armor}</p>
-                        <p>Actions: </p>
+                    <div className={styles.challenge}>
+                        <Dragon challenge={challenge}/>
                     </div>
-                    <Dragon/>
+                    <div className={styles.info}>
+                        <div className={styles.text}>
+                            <h2>{name}</h2>
+                            <p>Alignment: {alignment}</p>
+                            <p>Armor class: {armor}</p>
+                            <p>Actions</p>
+                        </div>
+                        <Actions actions={actions}/>
+                    </div>
                 </div>
             </div>
         </div>

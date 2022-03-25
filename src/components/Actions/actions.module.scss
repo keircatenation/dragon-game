@@ -1,0 +1,19 @@
+.root{
+    background-color: rgb(29, 29, 29);
+    padding:3px;
+    display: grid;
+    grid-auto-flow: column;
+    gap:3px;
+    overflow: auto;
+    .action{
+        grid-row:1;
+        background-color: black;
+        margin:0;
+        padding:.5rem;
+        p{
+            margin:0 0 .5rem;
+            font-size: .6rem;
+            line-height: 1rem;
+        }
+    }
+}

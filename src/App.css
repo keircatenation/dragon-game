@@ -1,19 +1,26 @@
+.App{
+  height: 100vh;
+  overflow: hidden;
+  display: grid;
+}
 .App header {
-  height:5vh;
   background-color: black;
   color: aquamarine;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding:.5rem;
 }
 .App header h1 {
   font-size: 1rem;
   margin: 0;
 }
-
 .arena{
   background-color: grey;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
 
 p{
