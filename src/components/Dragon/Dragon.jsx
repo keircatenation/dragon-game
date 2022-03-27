@@ -8,7 +8,7 @@ export default function Dragon(props) {
     for(let i=0; i<props.challenge; i++){
         challenge.push(i);
     }
-    console.log(challenge);
+    // console.log(challenge);
 
     return (
         challenge.map(challenge => {

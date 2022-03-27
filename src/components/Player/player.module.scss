@@ -1,5 +1,4 @@
 .root{
-    height:47vh;
     overflow:auto;
     display: grid;
     margin:5px;
@@ -28,6 +27,10 @@
         margin:0;
         background-color: aquamarine;
         align-self: stretch;
+        padding:1rem;
+    }
+    .stats > p{
+        font-size: clamp(.5rem, .8vh, .8rem);
     }
     .player{
         grid-row: 1;

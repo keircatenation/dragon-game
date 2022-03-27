@@ -3,6 +3,7 @@ import './App.css'
 import './components/Enemy/Enemy'
 import Enemy from './components/Enemy/Enemy'
 import Player from './components/Player/Player'
+const API = "https://www.dnd5eapi.co";
 
 function App() {
   const [enemy, setEnemy] = useState({
@@ -16,26 +17,70 @@ function App() {
   });
   const [player, setPlayer] = useState({
     level:1,
-    weapons:[
-      {name: "quarterstaff", attack:0, damage: 6}
-    ],
+    weapons:[],
+    defense:[],
+    rightHand:{},
+    leftHand:{},
+    bothHands:{},
     health:10,
     maxhp:10,
     armor:10,
+    strength:2,
+    proficiencies:["Simple Weapons", "Light Armor", "Shields"]
   })
-
   useEffect(() => {
-    getEnemy();
+    getEnemy(.25);
+    getWeapon("simple-weapons");
   }, [])
+
+  function addWeapon(weapon){
+    setPlayer(prev => ({
+      ...prev,
+      weapons:[...prev.weapons, weapon]
+    }))
+  }
 
   function attack(){
     console.log("attack!")
   }
 
+  function getWeapon(category="weapon"){
+    // get all weapons
+    try{
+      fetch(`${API}/api/equipment-categories/${category}`)
+      .then(resp=> resp.json())
+      .then(data => {
+        //get a random index of one weapon
+        let index = Math.floor(Math.random()*data.equipment.length);
+        let url = data.equipment[index].url;
+
+        //fetch that random weapon
+        fetch(`${API}${url}`)
+        .then(resp => resp.json())
+        .then(data => {
+          let weapon = {name:data.name,dice: data.damage.damage_dice, type: data.damage.damage_type.name, category:data.weapon_category, properties:data.properties}
+          
+          // add it to the player's armory
+          addWeapon(weapon);
+        })
+
+      })
+    } catch(err){
+      console.log(err)
+    }
+  }
+  function getArmor(armor){
+    // armor - light-armor, medium-armor, heavy-armor
+    fetch(`${API}/api/equipment-categories/${armor}`)
+  }
+  function getShield(){
+    fetch(`${API}/api/equipment-categories/shields`)
+  }
+
   function getEnemy(challenge=1){
     try {
       // this fetches a list of DND monsters of the inputted challenge level; the automatic level will be 1, since that's where we're starting the player off
-      fetch(`https://www.dnd5eapi.co/api/monsters?challenge_rating=${challenge}`)
+      fetch(`${API}/api/monsters?challenge_rating=${challenge}`)
       .then(resp => resp.json())
       .then(data => {
         let count = data.count;
@@ -43,15 +88,17 @@ function App() {
         let url = data.results[index].url;
 
         // this grabs the random monster decided bu the Math.random() above
-        fetch(`https://www.dnd5eapi.co${url}`)
+        fetch(`${API}${url}`)
           .then(resp => resp.json())
           .then(data => {
+
+            // filters out the actions that aren't attacks
             let actions = data.actions.filter(action => {
               if (action.damage.length > 0){
                 return action;
               }
             })
-            console.log(actions);
+
             // sets the information of the Enemy
             setEnemy({
               name:data.name,
