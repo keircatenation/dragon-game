@@ -1,6 +1,6 @@
-import styles from './weapons.module.scss'
+import styles from './armory.module.scss'
 
-export default function Weapons(props) {
+export default function Armory(props) {
     const {weapons, attack} = props;
 
     return (

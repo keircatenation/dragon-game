@@ -1,27 +1,26 @@
 .root{
     display: grid;
-    overflow:auto;
     .main{
-        background-color: aliceblue;
+        background-color: rgb(0, 0, 0);
         margin:5px 5px 0;
         display:grid;
         grid-template-rows: 10% auto;
-        grid-template-columns: 15% auto;
-        padding:5px;
         align-items: center;
-        label{
-            grid-row: 1;
-            grid-column: 1;
-        }
-        meter{
-            grid-row: 1;
-            grid-column: 2;
-            width: 100%;
+        .enemyHealth{
+            padding:0 .5rem;
+            margin-top:.5rem;
+            display: flex;
+            flex-direction: row;
+            label{
+                font-size: .8rem;
+                color: aliceblue;
+            }
+            meter{
+                width: 100%;
+            }
         }
         .enemy{
             grid-row: 2;
-            grid-column: 1/-1;
-            align-self: stretch;
             background-color: black;
             display:grid;
             grid-template-columns: 1fr;
@@ -49,6 +48,9 @@
                     h2{
                         text-align: center;
                         margin-top:0;
+                    }
+                    p{
+                        font-size: .6rem;
                     }
                 }
             }

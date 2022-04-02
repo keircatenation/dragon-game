@@ -1,26 +1,30 @@
+:root{
+  --red: #771313;
+}
+
 .App{
   height: 100vh;
   overflow: hidden;
   display: grid;
+  grid-template-rows: auto 1fr;
 }
 .App header {
   background-color: black;
-  color: aquamarine;
-  display: flex;
+  color: aliceblue;
+  padding:0 1rem;
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  padding:.5rem;
 }
 .App header h1 {
   font-size: 1rem;
   margin: 0;
 }
 .arena{
-  background-color: grey;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
+  background-color: #771313;
+  display:grid;
+  grid-template-rows: auto 1fr;
 }
 
 p{

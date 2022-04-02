@@ -3,9 +3,11 @@ import './App.css'
 import './components/Enemy/Enemy'
 import Enemy from './components/Enemy/Enemy'
 import Player from './components/Player/Player'
+import menu from './assets/menu.svg'
 const API = "https://www.dnd5eapi.co";
 
 function App() {
+  const [loadingEnemy, setLoadingEnemy] = useState(false);
   const [enemy, setEnemy] = useState({
     name: "",
     alignment:"",
@@ -78,6 +80,7 @@ function App() {
   }
 
   function getEnemy(challenge=1){
+    setLoadingEnemy(true);
     try {
       // this fetches a list of DND monsters of the inputted challenge level; the automatic level will be 1, since that's where we're starting the player off
       fetch(`${API}/api/monsters?challenge_rating=${challenge}`)
@@ -109,6 +112,7 @@ function App() {
               actions,
               challenge
             })
+            setLoadingEnemy(false);
           })
 
       })
@@ -121,10 +125,11 @@ function App() {
     <div className="App">
       <header>
         <h1>play some DND!</h1>
+        <img src={menu} alt="Menu Icon" id="menu-toggle" width="50px"/>
       </header>
       <section className="arena">
         <Enemy
-          enemy={enemy}/>
+          enemy={enemy} loading={loadingEnemy}/>
         <Player
           player={player}
           attack={attack}/>
