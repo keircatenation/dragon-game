@@ -1,12 +1,8 @@
-:root{
-  --red: #771313;
-}
-
 .App{
   height: 100vh;
   overflow: hidden;
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: 6vh 94vh;
 }
 .App header {
   background-color: black;
@@ -22,7 +18,7 @@
   margin: 0;
 }
 .arena{
-  background-color: #771313;
+  background-color: var(--highlight);
   display:grid;
   grid-template-rows: auto 1fr;
 }

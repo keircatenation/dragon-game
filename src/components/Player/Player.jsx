@@ -6,11 +6,11 @@ export default function Player(props) {
     const {attack} = props;
     const {health, level, armor, weapons, maxhp, strength, proficiencies, defense, rightHand, leftHand, bothHands} = props.player;
     let hands = [];
-    if (bothHands.length>0){
+    if (Object.entries(bothHands).length != 0){
         hands = [bothHands];
     } else {
         hands = [leftHand, rightHand];
-        console.log(hands);
+        // console.log(hands);
     }
 
     return (
@@ -20,7 +20,7 @@ export default function Player(props) {
                 <div className={styles.weapons}>
                     {hands.map((hand, index) => {
                         return (
-                        <p key={index}>weapon!:</p>
+                        <Weapon key={index}/>
                     )})}
                 </div>
             </div>

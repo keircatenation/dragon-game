@@ -33,6 +33,8 @@ function App() {
   useEffect(() => {
     getEnemy(.25);
     getWeapon("simple-weapons");
+    getWeapon("simple-weapons");
+    getWeapon("simple-weapons");
   }, [])
 
   function addWeapon(weapon){

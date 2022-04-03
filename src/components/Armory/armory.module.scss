@@ -7,16 +7,27 @@
     margin:0;
     display: grid;
     grid-auto-flow: row dense;
-    grid-template-columns: repeat(4, 1fr);
-    gap:1rem;
-    padding:5px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+    align-items: start;
+    padding:var(--large-gap);
     overflow-y:auto;
-    gap:5px;
+    gap:var(--small-gap);
     button{
-        background-color: var(--red);
-        padding:5px;
+        background-color: var(--highlight);
+        padding:var(--small-gap);
         color:white;
         border:none;
-        height: 120px;
+        cursor: pointer;
+        p{
+            margin:var(--small-gap) 0;
+            font-family: var(--font);
+            font-size: .5rem;
+        }
+        p:first-of-type{
+            font-size: .6rem;
+            margin-bottom: var(--small-gap);
+        }
+        
     }
 }

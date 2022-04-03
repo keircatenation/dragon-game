@@ -25,9 +25,7 @@ export default function Enemy(props) {
                     <div className={styles.info}>
                         <div className={styles.text}>
                             <h2>{loading? "Getting you an enemy!" : name}</h2>
-                            <p>Alignment: {alignment}</p>
-                            <p>Armor class: {armor}</p>
-                            <p>Actions</p>
+                            <p>Alignment: {alignment} * Armor class: {armor}</p>
                         </div>
                         <Actions actions={actions}/>
                     </div>

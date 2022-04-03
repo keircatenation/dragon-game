@@ -1,8 +1,9 @@
+import s from './weapon.module.scss'
+
 export default function Weapon(props) {
-    
 
     return (
-        <div>hello React!</div>
+        <div className={s.root}>weapon!</div>
     )
 
 }

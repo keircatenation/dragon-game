@@ -1,18 +1,18 @@
 .root{
     background-color: rgb(29, 29, 29);
-    padding:3px;
+    padding:var(--small-gap);
     display: grid;
     grid-auto-flow: column;
-    gap:3px;
+    gap:var(--small-gap);
     overflow: auto;
     .action{
         grid-row:1;
         background-color: black;
         margin:0;
-        padding:.5rem;
+        padding:var(--large-gap);
         p{
-            margin:0 0 .5rem;
-            font-size: .6rem;
+            margin:0 0 var(--small-gap);
+            font-size: .55rem;
             line-height: 1rem;
         }
     }
