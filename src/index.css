@@ -3,6 +3,8 @@
   --font: 'Press Start 2P', cursive;
   --large-gap:10px;
   --small-gap:3px;
+  --small-text: clamp(.5rem, 1vh, .6rem);
+  --small-lineheight:clamp(.6rem, 1.1vh, .7rem);
 }
 
 body {

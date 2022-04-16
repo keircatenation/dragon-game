@@ -1,33 +1,29 @@
 .root{
-    grid-row: 2;
-    grid-column: 1/-1;
-    background-color: black;
-    border:1px solid black;
-    align-self: stretch;
-    margin:0;
-    display: grid;
-    grid-auto-flow: row dense;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: auto;
-    align-items: start;
-    padding:var(--large-gap);
-    overflow-y:auto;
-    gap:var(--small-gap);
+    background-color: var(--highlight);
+    padding:var(--small-gap);
+    text-align: center;
+    color:white;
+    border:none;
+    cursor: pointer;
+    p{
+        margin:var(--small-gap) 0;
+        font-family: var(--font);
+        font-size: var(--small-text);
+        line-height: var(--small-lineheight);
+    }
+    p:first-of-type{
+        font-size: .7rem;
+        margin-bottom: var(--small-gap);
+    }
     button{
-        background-color: var(--highlight);
-        padding:var(--small-gap);
-        color:white;
-        border:none;
+        background-color: black;
+        color: white;
+        font: var(--font);
+        border: none;
+        font-size: .5rem;
+        padding: var(--large-gap);
+        display: inline-block;
+        margin: var(--small-gap);
         cursor: pointer;
-        p{
-            margin:var(--small-gap) 0;
-            font-family: var(--font);
-            font-size: .5rem;
-        }
-        p:first-of-type{
-            font-size: .6rem;
-            margin-bottom: var(--small-gap);
-        }
-        
     }
 }

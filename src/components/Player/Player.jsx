@@ -3,29 +3,32 @@ import Armory from '../Armory/Armory';
 import Weapon from '../Weapon/Weapon';
 
 export default function Player(props) {
-    const {attack} = props;
-    const {health, level, armor, weapons, maxhp, strength, proficiencies, defense, rightHand, leftHand, bothHands} = props.player;
-    let hands = [];
-    if (Object.entries(bothHands).length != 0){
-        hands = [bothHands];
-    } else {
-        hands = [leftHand, rightHand];
-        // console.log(hands);
-    }
+    const {attack, setter} = props;
+    const {health, level, armor, weapons, maxhp, strength, proficiencies, rightHand, leftHand} = props.player;
+    
 
     return (
         <div className={styles.root}>
-            <div onClick={attack} className={styles.selected}>
+            <div className={styles.selected}>
                 <h2>Selected Weapons</h2>
                 <div className={styles.weapons}>
-                    {hands.map((hand, index) => {
-                        return (
-                        <Weapon key={index}/>
-                    )})}
+                    {
+                        Object.keys(leftHand).length == 0? "" : <Weapon weapon={leftHand} attackfn={attack} attack={strength}/>
+                    }
+                    {
+                        Object.keys(rightHand).length == 0? "" : <Weapon weapon={rightHand} attackfn={attack} attack={strength}/>
+                    }
+                    
                 </div>
             </div>
             
-            <Armory weapons={weapons} attack={strength}/>
+            <div className={styles.armory}>
+                {weapons.map((weapon, index) => {
+                    return (
+                        <Armory weapon={weapon} key={weapon+index} attack={strength} setter={setter}/>
+                    );
+                })}
+            </div>
 
             <div className={styles.stats}>
                 <div>

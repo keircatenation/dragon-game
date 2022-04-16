@@ -17,12 +17,9 @@
   font-size: 1rem;
   margin: 0;
 }
-.arena{
-  background-color: var(--highlight);
-  display:grid;
-  grid-template-rows: auto 1fr;
+#menu-toggle{
+  cursor: pointer;
 }
-
 p{
   font-size: .7rem;
 }
