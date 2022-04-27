@@ -6,6 +6,7 @@ const API = "https://www.dnd5eapi.co";
 
 export default function Arena(props) {
     const [loadingEnemy, setLoadingEnemy] = useState(false);
+
     const [enemy, setEnemy] = useState({
         name: "",
         alignment:"",
@@ -21,12 +22,13 @@ export default function Arena(props) {
         defense:[],
         rightHand:{},
         leftHand:{},
-        health:10,
-        maxhp:10,
+        health:15,
+        maxhp:15,
         armor:10,
         strength:2,
         proficiencies:["Simple Weapons", "Light Armor", "Shields"]
     })
+
     useEffect(() => {
         getEnemy(.25);
         getWeapon("simple-weapons");
@@ -38,42 +40,6 @@ export default function Arena(props) {
         weapons:[...prev.weapons, weapon]
         }))
     }
-
-    function attack(attack, damage, type){
-        console.log("attack!", type);
-        let numDie = damage.match(/^\d+/)[0];
-        let dice = damage.match(/\d+$/)[0];
-        
-        let playerRoll = attackRoll(attack);
-        console.log("attack roll: ", playerRoll)
-        if (playerRoll[0] >= enemy.armor){
-            let d = damageRoll(numDie, dice, playerRoll[1]);
-            // console.log("damage: ", d)
-            setEnemy(prev => ({
-                ...prev,
-                health:prev.health-d,
-            }))
-        }
-
-    }
-    function attackRoll(bonus){
-        let d20 = Math.floor(Math.random()*20)+1;
-        if (d20 == 20){
-            return [d20+bonus, "crit"]
-        } else {
-            return [d20+bonus, ""]
-        }
-    }
-    function damageRoll(num, dice, crit){
-        let damage = num * Math.floor(Math.random()*dice)+1;
-        switch(crit){
-            case "crit":
-                return damage*2;
-            default:
-                return damage;
-        }
-    }
-
     function getWeapon(category="weapon"){
         // get all weapons
         try{
@@ -155,8 +121,10 @@ export default function Arena(props) {
             enemy={enemy} loading={loadingEnemy}/>
             <Player
             player={player}
-            attack={attack}
-            setter={setPlayer}/>
+            enemy={enemy}
+            setter={setPlayer}
+            setEnemy={setEnemy}
+            getEnemy={getEnemy}/>
         </section>
     )
 
