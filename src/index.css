@@ -1,20 +1,44 @@
 :root{
   --highlight: #771313;
-  --font: 'Press Start 2P', cursive;
+  --font: 'Press Start', monospace;
+  --text-font:"Roboto", sans-serif;
   --large-gap:10px;
   --small-gap:3px;
   --small-text: clamp(.5rem, 1vh, .6rem);
   --small-lineheight:clamp(.6rem, 1.1vh, .7rem);
 }
 
+@font-face {
+  font-family: "Press Start";
+  src: url("/src/assets/PressStart2P-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Roboto";
+  src: url("/src/assets/Roboto-Regular.ttf") format("truetype");
+}
+
 body {
   margin: 0;
   box-sizing: border-box;
-  font-family: var(--font);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: black;
+  /* background-color: black; */
 }
+h1, h2, h3 {
+  font-family: var(--font);
+}
+p {
+  font-family: var(--text-font);
+}
+
+h1 {
+  color: var(--highlight);
+  font-size: 2rem;
+}
+h2{
+  font-size: 1.75rem;
+}
+
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',

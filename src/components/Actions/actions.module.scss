@@ -1,19 +1,19 @@
 .root{
     background-color: rgb(29, 29, 29);
     padding:var(--small-gap);
-    display: grid;
-    grid-auto-flow: column;
-    gap:var(--small-gap);
+    // display: grid;
+    // grid-auto-flow: column;
+    // gap:var(--small-gap);
     overflow: auto;
-    .action{
-        grid-row:1;
-        background-color: black;
-        margin:0;
-        padding:var(--large-gap);
-        p{
-            margin:0 0 var(--small-gap);
-            font-size: .55rem;
-            line-height: 1rem;
-        }
-    }
+    // .action{
+    //     grid-row:1;
+    //     background-color: black;
+    //     margin:0;
+    //     padding:var(--large-gap);
+    //     p{
+    //         margin:0 0 var(--small-gap);
+    //         font-size: .55rem;
+    //         line-height: 1rem;
+    //     }
+    // }
 }

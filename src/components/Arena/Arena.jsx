@@ -6,31 +6,10 @@ const API = "https://www.dnd5eapi.co";
 
 export default function Arena(props) {
     const [loadingEnemy, setLoadingEnemy] = useState(false);
-
-    const [enemy, setEnemy] = useState({
-        name: "",
-        alignment:"",
-        armor:10,
-        health:10,
-        maxhp:10,
-        actions:[],
-        challenge:1
-    });
-    const [player, setPlayer] = useState({
-        level:1,
-        weapons:[],
-        defense:[],
-        rightHand:{},
-        leftHand:{},
-        health:15,
-        maxhp:15,
-        armor:10,
-        strength:2,
-        proficiencies:["Simple Weapons", "Light Armor", "Shields"]
-    })
-
+    const {enemy, player, setEnemy, setPlayer} = props;
+    
     useEffect(() => {
-        getEnemy(.25);
+        // getEnemy(.25);
         getWeapon("simple-weapons");
     }, [])
 

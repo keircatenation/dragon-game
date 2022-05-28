@@ -1,64 +1,64 @@
 .root{
-    overflow: hidden;
-    .main{
-        background-color: rgb(0, 0, 0);
-        margin:var(--small-gap);
-        margin-bottom:0;
-        display:grid;
-        grid-template-rows: 10% auto;
-        align-items: center;
-        .enemyHealth{
-            padding:0 var(--large-gap);
-            margin:var(--small-gap) 0;
-            display: flex;
-            flex-direction: row;
-            label{
-                font-size: .5rem;
-                color: aliceblue;
-            }
-            meter{
-                width: 100%;
-            }
-        }
-        .enemy{
-            grid-row: 2;
-            background-color: black;
-            display:grid;
-            grid-template-columns: 1fr;
-            grid-template-rows: auto 1fr;
-            color: aliceblue;
-            .challenge{
-                margin:var(--small-gap);
-                grid-row: 1;
-                justify-self: center;
-                display: flex;
-                flex-direction: row;
-                svg{
-                    max-height:3vh;
-                    height:100%;
-                    margin:0;
-                    padding:0;
-                }
-            }
-            .info{
-                padding:var(--large-gap);
-                padding-top:0;
-                display:grid;
-                grid-template-rows: auto 1fr;
-                .text{
-                    margin:0;
-                    padding:0;
-                    display: block;
-                    text-align: center;
-                    h2{
-                        margin-top:0;
-                        font-size: .8rem;
-                    }
-                    p{
-                        font-size: .5rem;
-                    }
-                }
-            }
-        }
-    }
+    overflow: auto;
+    // .main{
+    //     background-color: rgb(0, 0, 0);
+    //     margin:var(--small-gap);
+    //     margin-bottom:0;
+    //     display:grid;
+    //     grid-template-rows: 10% auto;
+    //     align-items: center;
+    //     .enemyHealth{
+    //         padding:0 var(--large-gap);
+    //         margin:var(--small-gap) 0;
+    //         display: flex;
+    //         flex-direction: row;
+    //         label{
+    //             font-size: .5rem;
+    //             color: aliceblue;
+    //         }
+    //         meter{
+    //             width: 100%;
+    //         }
+    //     }
+    //     .enemy{
+    //         grid-row: 2;
+    //         background-color: black;
+    //         display:grid;
+    //         grid-template-columns: 1fr;
+    //         grid-template-rows: auto 1fr;
+    //         color: aliceblue;
+    //         .challenge{
+    //             margin:var(--small-gap);
+    //             grid-row: 1;
+    //             justify-self: center;
+    //             display: flex;
+    //             flex-direction: row;
+    //             svg{
+    //                 max-height:3vh;
+    //                 height:100%;
+    //                 margin:0;
+    //                 padding:0;
+    //             }
+    //         }
+    //         .info{
+    //             padding:var(--large-gap);
+    //             padding-top:0;
+    //             display:grid;
+    //             grid-template-rows: auto 1fr;
+    //             .text{
+    //                 margin:0;
+    //                 padding:0;
+    //                 display: block;
+    //                 text-align: center;
+    //                 h2{
+    //                     margin-top:0;
+    //                     font-size: .8rem;
+    //                 }
+    //                 p{
+    //                     font-size: .5rem;
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
 }
