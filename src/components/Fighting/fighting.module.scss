@@ -1,0 +1,12 @@
+.root{
+    position: absolute;
+        z-index: 1;
+        background-color: var(--highlight);
+        color: white;
+        top:30vh;
+        margin:0 10vw;
+        width: 80vw;
+        p{
+            margin: var(--large-gap);
+        }
+}

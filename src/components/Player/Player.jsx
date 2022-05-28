@@ -2,54 +2,55 @@ import { useState } from 'react'
 import styles from './player.module.scss'
 import Armory from '../Armory/Armory';
 import Weapon from '../Weapon/Weapon';
+import Fighting from '../Fighting/Fighting';
 
 export default function Player(props) {
     const {setter, setEnemy, enemy, getEnemy} = props;
     const {health, level, armor, weapons, maxhp, strength, proficiencies, rightHand, leftHand} = props.player;
-    
     const [fighting, setFighting] = useState(false);
-    const [playerRoll, setPlayerRoll] = useState([]);
-    const [damage, setDamage] = useState();
-    const [enemyRoll, setEnemyRoll] = useState([]);
+    const [damage, setDamage] = useState({
+        message:"",
+        num:0,
+    });
 
     function attack(attack, dam, type){
         console.log("attack!", type);
-        setFighting(true);
 
         let numDie = dam.match(/^\d+/)[0];
         let dice = dam.match(/\d+$/)[0];
-        
-        setTimeout(() => {
-            let r = attackRoll(attack);
-            setPlayerRoll(r);
-            console.log("attack roll: ", r)
 
-            if (r[0] >= enemy.armor){
-                setTimeout(() => {
-                    let d = damageRoll(numDie, dice, r[1]);
-                    setDamage(d);
-                    console.log("damage: ", d)
-
-                    if (enemy.health-d > 0){
-                        setEnemy(prev => ({
-                            ...prev,
-                            health:prev.health-d,
-                        }))
-                    } else {
-                        console.log("DEAD ENEMY");
-                    }
-                    setTimeout(() => {
-                        setPlayerRoll(0);
-                        setDamage();
-                        setFighting(false);
-                    }, 3500)
-                }, 1000)
-            }
+        let r = attackRoll(attack);
+        console.log("attack roll: ", r);
+        if (r[0] >= enemy.armor){
+            let d = damageRoll(numDie, dice, r[1]);
+            console.log("damage: ", d);
+            setDamage({
+                message:r[1],
+                num:d,
+            });
+            setFighting(true);
+            
             setTimeout(() => {
-                setPlayerRoll(0);
+                if (enemy.health-d > 0){
+                    setEnemy(prev => ({
+                        ...prev,
+                        health:prev.health-d,
+                    }))
+                } else {
+                    console.log("DEAD ENEMY");
+                    
+                    getEnemy();
+                }
                 setFighting(false);
-            }, 3500)
-        }, 1000)
+                setDamage({message:"",
+                num:0,});
+            }, 2000);
+        } else{
+            setFighting(true);
+            setTimeout(() => {
+                setFighting(false);
+            }, 2000);
+        }
     }
     function attackRoll(bonus){
         let d20 = Math.floor(Math.random()*20)+1;
@@ -72,10 +73,7 @@ export default function Player(props) {
     return (
         <div className={styles.root}>
             {
-                fighting? <div className={styles.fighting}>
-                <p>Attack Roll: {playerRoll? playerRoll : ""}</p>
-                {<p>Damage: {damage}</p>}
-                </div> : ""
+                fighting? <Fighting damage={damage}/> : ""
             }
             <div className={styles.selected}>
                 <h2>Selected Weapons</h2>

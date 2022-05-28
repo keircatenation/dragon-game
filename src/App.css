@@ -1,8 +1,10 @@
 .App{
   height: 100vh;
+  max-width:50vh;
   overflow: hidden;
   display: grid;
   grid-template-rows: 6vh 94vh;
+  margin:0 auto;
 }
 .App header {
   background-color: black;
