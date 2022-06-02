@@ -1,35 +1,19 @@
+// This is the literal armory for the player, showing all of their weapons and armor. From here, players can equip an item onto their "player" in the arena
+
 import styles from './armory.module.scss'
 import { useState } from 'react';
 
 export default function Armory(props) {
-    const {weapon, attack, setter} = props;
-    const [clicked, setClick] = useState(false);
-
-    function setRight(w){
-        // console.log("right");
-        setter(prev => ({
-            ...prev,
-            rightHand:w,
-        }))
-    }
-    function setLeft(w){
-        // console.log("left");
-        setter(prev => ({
-            ...prev,
-            leftHand:w,
-        }))
-    }
+    const {armor, weapons, shields} = props.armory;
+    
+    // armor = array of all armor
+    // weapons = array of all weapons
+    // shields = array of all shields
+    
 
     return (
-        <div className={styles.root} onClick={() => setClick(prev=> !prev)}>
-            <p>{weapon.name}</p>
-            <p>Attack: +{attack}</p>
-            <p>Damage: {weapon.dice} {weapon.type}</p>
-            <p>Category: {weapon.category}</p>
-            {!clicked? "" : <div>
-                <button onClick={() => setLeft(weapon)}>Left</button>
-                <button onClick={() => setRight(weapon)}>Right</button>
-                </div>}
+        <div className={styles.root}>
+            A list of all weapons!
         </div>
     )
 

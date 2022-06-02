@@ -15,3 +15,5 @@
   - increasing HP and EXP based on number of enemies fought
   - - store the names of enemies fought?
   - selection of weapons: drag and drop instead of click and select
+  - Create a Journal to save all opponents defeated
+  - Create the separate Armory to hold all the weapons and shields and armor

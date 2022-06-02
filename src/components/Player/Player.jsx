@@ -1,12 +1,11 @@
 import { useState } from 'react'
 import styles from './player.module.scss'
-import Armory from '../Armory/Armory';
 import Weapon from '../Weapon/Weapon';
 import Fighting from '../Fighting/Fighting';
 
 export default function Player(props) {
     const {setter, setEnemy, enemy, getEnemy} = props;
-    const {health, level, armor, weapons, maxhp, strength, proficiencies, rightHand, leftHand} = props.player;
+    const {health, level, armor, maxhp, strength, proficiencies, rightHand, leftHand} = props.player;
     const [fighting, setFighting] = useState(false);
     const [damage, setDamage] = useState({
         message:"",
@@ -86,14 +85,6 @@ export default function Player(props) {
                     }
                     
                 </div>
-            </div>
-            
-            <div className={styles.armory}>
-                {weapons.map((weapon, index) => {
-                    return (
-                        <Armory weapon={weapon} key={weapon+index} attack={strength} setter={setter}/>
-                    );
-                })}
             </div>
 
             <div className={styles.stats}>
