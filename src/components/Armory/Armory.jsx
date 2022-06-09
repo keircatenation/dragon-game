@@ -13,7 +13,8 @@ export default function Armory(props) {
 
     return (
         <div className={styles.root}>
-            A list of all weapons!
+            
+            <h2>A list of all weapons!</h2>
         </div>
     )
 

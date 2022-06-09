@@ -5,7 +5,7 @@ import Fighting from '../Fighting/Fighting';
 
 export default function Player(props) {
     const {setter, setEnemy, enemy, getEnemy} = props;
-    const {health, level, armor, maxhp, strength, proficiencies, rightHand, leftHand} = props.player;
+    const {hp, level, ac, maxhp, strength, proficiencies, rightHand, leftHand} = props.player;
     const [fighting, setFighting] = useState(false);
     const [damage, setDamage] = useState({
         message:"",
@@ -20,7 +20,7 @@ export default function Player(props) {
 
         let r = attackRoll(attack);
         console.log("attack roll: ", r);
-        if (r[0] >= enemy.armor){
+        if (r[0] >= enemy.ac){
             let d = damageRoll(numDie, dice, r[1]);
             console.log("damage: ", d);
             setDamage({
@@ -30,10 +30,10 @@ export default function Player(props) {
             setFighting(true);
             
             setTimeout(() => {
-                if (enemy.health-d > 0){
+                if (enemy.hp-d > 0){
                     setEnemy(prev => ({
                         ...prev,
-                        health:prev.health-d,
+                        hp:prev.hp-d,
                     }))
                 } else {
                     console.log("DEAD ENEMY");
@@ -90,7 +90,7 @@ export default function Player(props) {
             <div className={styles.stats}>
                 <div>
                     <p>Level: {level}</p>
-                    <p>Armor Class: {armor}</p>
+                    <p>Armor Class: {ac}</p>
                     <p>Strength: +{strength}</p>
                 </div>
                 <p>Proficiencies:<br/> {proficiencies.join(", ")}</p>
@@ -100,7 +100,7 @@ export default function Player(props) {
             <meter id='player-hp'
                 min="0" max={maxhp}
                 optimum={maxhp} high={Math.floor(maxhp * (2/3))} low={Math.floor(maxhp * (1/3))}
-                value={health}>{health}/100
+                value={hp}>{hp}/100
             </meter>
         </div>
     )

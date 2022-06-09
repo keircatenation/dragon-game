@@ -2,42 +2,11 @@ import { useState, useEffect } from 'react'
 import s from './arena.module.scss'
 import Enemy from '../Enemy/Enemy'
 import Player from '../Player/Player'
-const API = "https://www.dnd5eapi.co";
+
 
 export default function Arena( props ) {
     const [loadingEnemy, setLoadingEnemy] = useState( false );
-    const { enemy, player, setEnemy, setPlayer, setArmory } = props;
-    
-    function getWeapon( category="weapon" ) {
-        // get all weapons
-        try {
-            fetch( `${API}/api/equipment-categories/${category}` )
-            .then( resp=> resp.json() )
-            .then( data => {
-                //get a random index of one weapon
-                let index = Math.floor(Math.random()*data.equipment.length);
-                let url = data.equipment[index].url;
-
-                //fetch that random weapon
-                fetch( `${API}${url}` )
-                .then( resp => resp.json() )
-                .then( data => {
-                    let newWeapon = {
-                        name:data.name,
-                        dice: data.damage.damage_dice,
-                        type: data.damage.damage_type.name,
-                        category:data.weapon_category,
-                        properties:data.properties
-                    }
-                    
-                    // add it to the player's armory
-                    setArmory( prev => [...prev, newWeapon] );
-                })
-            })
-        } catch( err ) {
-            console.log( err );
-        }
-    }
+    const { enemy, player, setEnemy, setPlayer, setArmory, setJournal } = props;
 
     function getArmor( armor ) {
         // armor - light-armor, medium-armor, heavy-armor

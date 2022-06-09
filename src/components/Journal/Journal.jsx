@@ -9,7 +9,7 @@ export default function Journal(props) {
 
     return (
         <div>
-            This will be a list of all enemies fought!
+            <h2>This will be a list of all enemies fought!</h2>
         </div>
     )
 
