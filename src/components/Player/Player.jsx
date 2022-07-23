@@ -4,7 +4,7 @@ import Weapon from '../Weapon/Weapon';
 import Fighting from '../Fighting/Fighting';
 
 export default function Player(props) {
-    const {setter, setEnemy, enemy, getEnemy} = props;
+    const {setEnemy, enemy} = props;
     const {hp, level, ac, maxhp, strength, proficiencies, rightHand, leftHand} = props.player;
     const [fighting, setFighting] = useState(false);
     const [damage, setDamage] = useState({
@@ -37,8 +37,6 @@ export default function Player(props) {
                     }))
                 } else {
                     console.log("DEAD ENEMY");
-                    
-                    getEnemy();
                 }
                 setFighting(false);
                 setDamage({message:"",

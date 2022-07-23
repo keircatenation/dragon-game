@@ -1,21 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { useFetch } from "use-http";
 import Arena from './components/Arena/Arena';
 import Credits from './components/Credits/Credits';
 import Armory from './components/Armory/Armory';
 import Journal from './components/Journal/Journal';
-import s from './components/app.module.scss';
+import s from './app.module.scss';
 import dragon from './assets/dragon-favicon.svg';
-// import { getWeapon } from './assets/functions'
-
-const API = "https://www.dnd5eapi.co";
 
 function App() {
   const [enemy, setEnemy] = useState({
     name: "",
-    alignment:"",
-    ac:10,
-    hp:10,
+    armor:10,
+    health:10,
     maxhp:10,
     actions:[],
     challenge:1
@@ -36,50 +33,76 @@ function App() {
     shields:[]
   })
   const [journal, setJournal] = useState([]);
+  const { get, post, response, loading, error } = useFetch("https://www.dnd5eapi.co");
 
-  useEffect ( () => {
-    getWeapon();
-}, [])
-
-function getWeapon( category="weapon" ) {
-  // get all weapons
-  try {
-      fetch( `${API}/api/equipment-categories/${category}` )
-      .then( resp=> resp.json() )
-      .then( data => {
-          //get a random index of one weapon
-          let index = Math.floor(Math.random()*data.equipment.length);
-          let url = data.equipment[index].url;
-
-          //fetch that random weapon
-          fetch( `${API}${url}` )
-          .then( resp => resp.json() )
-          .then( data => {
-              let name = data.name;
-              let desc = data.desc ?? [];
-              let dice = data.damage?.damage_dice ?? "";
-              let type = data.damage?.damage_type.name ?? "";
-              let category = data.weapon_category ?? "";
-              let rarity = data.rarity?.name ?? "";
-              let properties = data.properties ?? [];
-              setArmory( prev => ( {
-                ...prev,
-                weapons: [...prev.weapons, {
-                  name,
-                  desc,
-                  dice,
-                  type,
-                  category,
-                  rarity,
-                  properties
-                }]
-              }))
-          })
-      })
-  } catch( err ) {
-      console.log( err );
+  function addWeapon( weapon ) {
+    setArmory(prev => ({
+      ...prev,
+      weapons: [...prev.weapons, weapon]
+    }))
   }
-}
+  function addArmor( armor ) {
+    setArmory(prev => ({
+      ...prev,
+      armor: [...prev.armor, armor]
+    }))
+  }
+  function addShield( shield ) {
+    setArmory(prev => ({
+      ...prev,
+      shields: [...prev.shields, shield]
+    }))
+  }
+  function addEnemyToJournal(enemy) {
+    setJournal( prev => [...prev, enemy])
+  }
+  async function getEnemy( challenge=1 ) {
+    let url;
+    const manyEnemies = await get(`/api/monsters?challenge_rating=${challenge}`);
+    if (response.ok) {
+      let index = Math.floor( Math.random() * manyEnemies.count );
+      url = manyEnemies.results[index].url;
+    }
+    
+    let enemy = await get(url);
+    if (response.ok){
+      let actions = enemy.actions.filter( action => {
+        if ( action.damage && action.damage.length > 0 ) {
+          return action;
+        }
+      } );
+      setEnemy({
+        name: enemy.name,
+        armor: enemy.armor_class,
+        health: enemy.hit_points,
+        maxhp: enemy.hit_points,
+        actions: actions,
+        challenge: challenge
+      })
+    }
+  }
+  async function getWeapon( category="weapon" ) {
+    let url;
+    const allWeapons = await get(`/api/equipment-categories/${category}`);
+    if (response.ok) {
+      let index = Math.floor( Math.random()*allWeapons.equipment.length )
+      url = allWeapons.equipment[index].url;
+    }
+    const data = await get(url);
+    if (response.ok) {
+      let weapon = {
+        name: data.name,
+        desc: data.desc ?? [],
+        dice: data.damage?.damage_dice ?? "",
+        type: data.damaga?.damage_type.name ?? "",
+        category: data.weapon_category ?? "",
+        rarity: data.rarity ?? "",
+        properties: data.properties ?? []
+      }
+      console.log(weapon)
+      addWeapon( weapon );
+    }
+  }
 
   return (
     <div className={s.root}>
@@ -104,7 +127,22 @@ function getWeapon( category="weapon" ) {
         <main>
           <Routes>
             <Route path="/dragon-game/" element={<Credits/>} />
-            <Route path="/dragon-game/arena" element={<Arena player={player} setPlayer={setPlayer} enemy={enemy} setEnemy={setEnemy} setArmory={setArmory} setJournal={setJournal}/>} />
+            <Route
+              path="/dragon-game/arena"
+              element={
+                <Arena
+                  player={player}
+                  setPlayer={setPlayer}
+                  enemy={enemy}
+                  getEnemy={getEnemy}
+                  addShield={addShield}
+                  addArmor={addArmor}
+                  addEnemyToJournal={addEnemyToJournal}
+                  getWeapon={getWeapon}
+                  loading={loading}
+                />
+              }
+            />
             <Route path="/dragon-game/armory" element={<Armory armory={armory}/>} />
             <Route path="/dragon-game/journal" element={<Journal journal={journal}/>} />
           </Routes>
