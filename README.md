@@ -1,6 +1,11 @@
 # (Dungeons and) Dragon Game
  A simple game pitting you against DND enemies! Based on a class project done for the Front End Web Development certificate program at MCC, adn drawing upon the DND 5e API.
 
+ ### To-Do
+ 1. Keeping track of whether a weapon is equipped
+ 2. Attack functions
+ 3. Keeping track of whether an armor or shield is equipped
+
  ### Goals
   - ✔️ Assign Attack and Defense stats to each dragon type
   - ✔️ "Clicks" value is replaced with HP
@@ -17,3 +22,4 @@
   - selection of weapons: drag and drop instead of click and select
   - Create a Journal to save all opponents defeated
   - Create the separate Armory to hold all the weapons and shields and armor
+    - keeping track of which weapons and equipment are equipped

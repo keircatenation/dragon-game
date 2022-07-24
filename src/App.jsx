@@ -21,6 +21,7 @@ function App() {
     level:1,
     rightHand:{},
     leftHand:{},
+    equipped: [],
     hp:15,
     maxhp:15,
     ac:10,
@@ -33,19 +34,25 @@ function App() {
     shields:[]
   })
   const [journal, setJournal] = useState([]);
+  useEffect(() => {
+    getWeapon();
+  }, [])
+
   const { get, post, response, loading, error } = useFetch("https://www.dnd5eapi.co");
 
-  function addWeapon( weapon ) {
-    setArmory(prev => ({
-      ...prev,
-      weapons: [...prev.weapons, weapon]
-    }))
-  }
+  // adding things to data
   function addArmor( armor ) {
     setArmory(prev => ({
       ...prev,
       armor: [...prev.armor, armor]
     }))
+  }
+  function addEnemyToJournal(enemy) {
+    let e = {
+      name: enemy.name,
+      challenge: enemy.challenge
+    }
+    setJournal( prev => [...prev, e])
   }
   function addShield( shield ) {
     setArmory(prev => ({
@@ -53,9 +60,14 @@ function App() {
       shields: [...prev.shields, shield]
     }))
   }
-  function addEnemyToJournal(enemy) {
-    setJournal( prev => [...prev, enemy])
+  function addWeapon( weapon ) {
+    setArmory(prev => ({
+      ...prev,
+      weapons: [...prev.weapons, weapon]
+    }))
   }
+  
+  // getting things from the API
   async function getEnemy( challenge=1 ) {
     let url;
     const manyEnemies = await get(`/api/monsters?challenge_rating=${challenge}`);
@@ -94,12 +106,12 @@ function App() {
         name: data.name,
         desc: data.desc ?? [],
         dice: data.damage?.damage_dice ?? "",
-        type: data.damaga?.damage_type.name ?? "",
+        type: data.damage?.damage_type.name ?? "",
         category: data.weapon_category ?? "",
         rarity: data.rarity ?? "",
-        properties: data.properties ?? []
+        properties: data.properties ?? [],
+        equipped: false
       }
-      console.log(weapon)
       addWeapon( weapon );
     }
   }
@@ -126,7 +138,10 @@ function App() {
 
         <main>
           <Routes>
-            <Route path="/dragon-game/" element={<Credits/>} />
+            <Route
+              path="/dragon-game/"
+              element={<Credits/>}
+            />
             <Route
               path="/dragon-game/arena"
               element={
@@ -143,7 +158,7 @@ function App() {
                 />
               }
             />
-            <Route path="/dragon-game/armory" element={<Armory armory={armory}/>} />
+            <Route path="/dragon-game/armory" element={<Armory armory={armory} setPlayer={setPlayer}/>} />
             <Route path="/dragon-game/journal" element={<Journal journal={journal}/>} />
           </Routes>
         </main>

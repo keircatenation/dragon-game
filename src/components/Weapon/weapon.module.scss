@@ -1,23 +1,18 @@
 .root{
-    background-color: black;
-    padding:1rem;
-    // h3{
-    //     margin:0;
-    //     font-size: clamp(.6rem, 1.5vh, .8rem);
-    //     hyphens:auto;
-    // }
-    // p{
-    //     font-size: var(--small-text);
-    //     line-height: var(--small-lineheight);
-    // }
-    
-    // button{
-    //     background-color: var(--highlight);
-    //     color: white;
-    //     border: none;
-    //     padding: var(--large-gap);
-    //     font-family: var(--font);
-    //     font-size: var(--small-text);
-    //     cursor: pointer;
-    // }
+    border: 2px solid var(--highlight);
+    padding:.5rem;
+    border-radius: 10px;
+    h3 {
+        font-size: .8rem;
+        color: var(--highlight);
+    }
+    button {
+        background-color: var(--highlight);
+        border: none;
+        color: white;
+        padding:.2rem;
+        font-weight: bold;
+        font-family: var(--text-font);
+        margin:2px;
+    }
 }

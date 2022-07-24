@@ -1,3 +1,13 @@
 .root{
     background-color: white;
+    .armory {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: .5rem;
+    }
+    @media (min-width: 800px) {
+        .armory {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+    }
 }

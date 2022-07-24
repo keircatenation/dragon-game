@@ -1,8 +1,5 @@
-import { useState, useEffect } from 'react'
-import { useFetch } from "use-http";
 import s from './arena.module.scss'
 import Player from '../Player/Player'
-import Dragon from '../Dragon/Dragon'
 import Enemy from '../Enemy/Enemy';
 
 
@@ -14,12 +11,13 @@ export default function Arena( props ) {
             <div className={s.enemy}>
                 {loading && "...loading"}
                 {
-                    !enemy.name ?<button onClick={() => getEnemy()}>Get Enemy</button> : <Enemy enemy={enemy} />
+                    !enemy.name ? <button onClick={() => getEnemy()}>Get Enemy</button> : <Enemy enemy={enemy} />
                 }
             </div>
             <Player
-            player={player}
-            enemy={enemy}/>
+                player={player}
+                enemy={enemy}
+            />
         </section>
     )
 

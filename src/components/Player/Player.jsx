@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import styles from './player.module.scss'
-import Weapon from '../Weapon/Weapon';
+// import Weapon from '../Weapon/Weapon';
 import Fighting from '../Fighting/Fighting';
 
 export default function Player(props) {
@@ -76,10 +76,10 @@ export default function Player(props) {
                 <h2>Selected Weapons</h2>
                 <div className={styles.weapons}>
                     {
-                        Object.keys(leftHand).length == 0? <Weapon empty={true} attackfn={attack} attack={strength}/> : <Weapon weapon={leftHand} attackfn={attack} attack={strength}/>
+                        // Object.keys(leftHand).length == 0? <Weapon empty={true} attackfn={attack} attack={strength}/> : <Weapon weapon={leftHand} attackfn={attack} attack={strength}/>
                     }
                     {
-                        Object.keys(rightHand).length == 0? <Weapon empty={true} attackfn={attack} attack={strength}/> : <Weapon weapon={rightHand} attackfn={attack} attack={strength}/>
+                        // Object.keys(rightHand).length == 0? <Weapon empty={true} attackfn={attack} attack={strength}/> : <Weapon weapon={rightHand} attackfn={attack} attack={strength}/>
                     }
                     
                 </div>

@@ -1,16 +1,35 @@
 import s from './weapon.module.scss'
+import { useState } from 'react';
 
 export default function Weapon(props) {
-    const {weapon, attack, attackfn, empty} = props;
-    // console.log(weapon);
+    const {weapon, index, setPlayer} = props;
+    const [isEquipped, setIsEquipped] = useState(false);
+
+    function setAsRightHand(weapon) {
+        setIsEquipped(true);
+        setPlayer( prev => ({
+            ...prev,
+            rightHand: weapon
+        }))
+    }
+    function setAsLeftHand(weapon) {
+        setIsEquipped(true);
+        setPlayer( prev => ({
+            ...prev,
+            leftHand: weapon
+        }))
+    }
 
     return (
-        <div className={s.root}>
-            <h3>{!empty? weapon.name : "Select a Weapon!"}</h3>
-            <p>Attack: +{attack}<br/>
-            Damage: { !empty? weapon.dice : ""} {!empty? weapon.type: ""}</p>
+        <div className={s.root} key={index}>
+            <h3>{weapon.name}</h3>
+            <p>Attack: +player strength<br/>
+            Damage: {weapon.dice} {weapon.type}<br/>
+            Category: {weapon.category}</p>
             
-            {!empty? <button onClick={() => attackfn(attack, weapon.dice, weapon.type)}>ATTACK!</button> : ""}
+            {isEquipped && <p>Equipped</p>}
+            <button onClick={()=> setAsLeftHand(weapon)}>Set Left Hand</button>
+            <button onClick={()=> setAsRightHand(weapon)}>Set Right Hand</button>
         </div>
     )
 
