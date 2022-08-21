@@ -19,8 +19,7 @@ function App() {
   });
   const [player, setPlayer] = useState({
     level:1,
-    rightHand:{},
-    leftHand:{},
+    weapon:{},
     equipped: [],
     hp:15,
     maxhp:15,
@@ -93,7 +92,7 @@ function App() {
       })
     }
   }
-  async function getWeapon( category="weapon" ) {
+  async function getWeapon( category="simple-weapons" ) {
     let url;
     const allWeapons = await get(`/api/equipment-categories/${category}`);
     if (response.ok) {
@@ -125,12 +124,12 @@ function App() {
               <img src={dragon} width="50px" />
               <h1><span>(Dungeons and)<br/></span> Dragon Game</h1>
             </div>
-            <Link to="/dragon-game/" >Credits</Link>
+            <Link to="/dragon-game/credits" >Credits</Link>
           </div>
 
           <nav>
             <Link to="/dragon-game/armory">Armory</Link>
-            <Link to="/dragon-game/arena">Arena</Link>
+            <Link to="/dragon-game/">Arena</Link>
             <Link to="/dragon-game/journal">Journal</Link>
           </nav>
         </header>
@@ -139,16 +138,17 @@ function App() {
         <main>
           <Routes>
             <Route
-              path="/dragon-game/"
+              path="/dragon-game/credits"
               element={<Credits/>}
             />
             <Route
-              path="/dragon-game/arena"
+              path="/dragon-game/"
               element={
                 <Arena
                   player={player}
                   setPlayer={setPlayer}
                   enemy={enemy}
+                  setEnemy={setEnemy}
                   getEnemy={getEnemy}
                   addShield={addShield}
                   addArmor={addArmor}
@@ -158,7 +158,7 @@ function App() {
                 />
               }
             />
-            <Route path="/dragon-game/armory" element={<Armory armory={armory} setPlayer={setPlayer}/>} />
+            <Route path="/dragon-game/armory" element={<Armory armory={armory} setPlayer={setPlayer} setArmory={setArmory}/>} />
             <Route path="/dragon-game/journal" element={<Journal journal={journal}/>} />
           </Routes>
         </main>

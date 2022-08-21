@@ -4,7 +4,7 @@ import Enemy from '../Enemy/Enemy';
 
 
 export default function Arena( props ) {
-    const { player, enemy, getEnemy, addShield, addArmor, addEnemyToJournal, getWeapon, loading } = props;
+    const { player, enemy, setEnemy, getEnemy, addShield, addArmor, addEnemyToJournal, getWeapon, loading } = props;
 
     return (
         <section className={s.root}>
@@ -17,6 +17,7 @@ export default function Arena( props ) {
             <Player
                 player={player}
                 enemy={enemy}
+                setEnemy={setEnemy}
             />
         </section>
     )

@@ -5,22 +5,23 @@ import Fighting from '../Fighting/Fighting';
 
 export default function Player(props) {
     const {setEnemy, enemy} = props;
-    const {hp, level, ac, maxhp, strength, proficiencies, rightHand, leftHand} = props.player;
+    const {hp, level, ac, maxhp, strength, proficiencies, weapon} = props.player;
     const [fighting, setFighting] = useState(false);
     const [damage, setDamage] = useState({
         message:"",
         num:0,
     });
 
-    function attack(attack, dam, type){
+    function attack(strength, dam, type){
         console.log("attack!", type);
 
         let numDie = dam.match(/^\d+/)[0];
         let dice = dam.match(/\d+$/)[0];
 
-        let r = attackRoll(attack);
-        console.log("attack roll: ", r);
-        if (r[0] >= enemy.ac){
+        let r = attackRoll(strength);
+        console.log("attack roll: ", r, enemy.armor, enemy.health);
+
+        if (r[0] >= enemy.armor){
             let d = damageRoll(numDie, dice, r[1]);
             console.log("damage: ", d);
             setDamage({
@@ -30,10 +31,10 @@ export default function Player(props) {
             setFighting(true);
             
             setTimeout(() => {
-                if (enemy.hp-d > 0){
+                if (enemy.health-d > 0){
                     setEnemy(prev => ({
                         ...prev,
-                        hp:prev.hp-d,
+                        health:prev.health-d,
                     }))
                 } else {
                     console.log("DEAD ENEMY");
@@ -70,19 +71,19 @@ export default function Player(props) {
     return (
         <div className={styles.root}>
             {
-                fighting? <Fighting damage={damage}/> : ""
+                fighting && <Fighting damage={damage}/>
             }
             <div className={styles.selected}>
-                <h2>Selected Weapons</h2>
+                {Object.keys(weapon).length == 0 && <p>Go to your Armory to select your weapon!</p>}
+                {Object.keys(weapon).length > 0 && 
                 <div className={styles.weapons}>
-                    {
-                        // Object.keys(leftHand).length == 0? <Weapon empty={true} attackfn={attack} attack={strength}/> : <Weapon weapon={leftHand} attackfn={attack} attack={strength}/>
-                    }
-                    {
-                        // Object.keys(rightHand).length == 0? <Weapon empty={true} attackfn={attack} attack={strength}/> : <Weapon weapon={rightHand} attackfn={attack} attack={strength}/>
-                    }
-                    
+                    <h3>{weapon.name}</h3>
+                    <p>Attack: +player strength<br/>
+                    Damage: {weapon.dice} {weapon.type}<br/>
+                    Category: {weapon.category}</p>
+                    <button onClick={() => attack(strength, weapon.dice, weapon.type)}>Attack!</button>
                 </div>
+                }
             </div>
 
             <div className={styles.stats}>
