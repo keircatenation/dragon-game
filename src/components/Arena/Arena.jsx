@@ -1,10 +1,14 @@
 import s from './arena.module.scss'
 import Player from '../Player/Player'
 import Enemy from '../Enemy/Enemy';
+import { useDragonStore } from '../../DragonStore';
 
 
 export default function Arena( props ) {
-    const { player, enemy, setEnemy, getEnemy, addShield, addArmor, addEnemyToJournal, getWeapon, loading } = props;
+    const enemy = useDragonStore( (store) => store.enemy );
+    const setEnemy = useDragonStore( (store) => store.setEnemy );
+
+    const { loading, getEnemy } = props;
 
     return (
         <section className={s.root}>
@@ -14,11 +18,7 @@ export default function Arena( props ) {
                     !enemy.name ? <button onClick={() => getEnemy()}>Get Enemy</button> : <Enemy enemy={enemy} />
                 }
             </div>
-            <Player
-                player={player}
-                enemy={enemy}
-                setEnemy={setEnemy}
-            />
+            <Player />
         </section>
     )
 

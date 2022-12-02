@@ -1,11 +1,18 @@
 .root{
     background-color: var(--highlight);
-    // display:grid;
-    // grid-template-rows: auto 1fr;
     padding: .5rem;
     .enemy {
         background-color: white;
         padding:.5rem;
-        
+        // display: flex;
+        // justify-content: center;
+        button {
+            background-color: var(--highlight);
+            color: white;
+            border:none;
+            padding: 1rem 1.25rem;
+            font-family: var(--font);
+            font-size: 1rem;
+        }
     }
 }

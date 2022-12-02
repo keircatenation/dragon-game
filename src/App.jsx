@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import {useDragonStore} from './DragonStore';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { useFetch } from "use-http";
 import Arena from './components/Arena/Arena';
@@ -9,65 +10,19 @@ import s from './app.module.scss';
 import dragon from './assets/dragon-favicon.svg';
 
 function App() {
-  const [enemy, setEnemy] = useState({
-    name: "",
-    armor:10,
-    health:10,
-    maxhp:10,
-    actions:[],
-    challenge:1
-  });
-  const [player, setPlayer] = useState({
-    level:1,
-    weapon:{},
-    equipped: [],
-    hp:15,
-    maxhp:15,
-    ac:10,
-    strength:2,
-    proficiencies:["Simple Weapons", "Light Armor", "Shields"]
-  })
-  const [armory, setArmory] = useState({
-    armor: [],
-    weapons: [],
-    shields:[]
-  })
-  const [journal, setJournal] = useState([]);
+  const setEnemy = useDragonStore( (state) => state.setEnemy );
+  const addWeapon = useDragonStore( (state) => state.addWeapon );
+  const addArmor = useDragonStore( (state) => state.addArmor );
+
   useEffect(() => {
     getWeapon();
   }, [])
 
   const { get, post, response, loading, error } = useFetch("https://www.dnd5eapi.co");
 
-  // adding things to data
-  function addArmor( armor ) {
-    setArmory(prev => ({
-      ...prev,
-      armor: [...prev.armor, armor]
-    }))
-  }
-  function addEnemyToJournal(enemy) {
-    let e = {
-      name: enemy.name,
-      challenge: enemy.challenge
-    }
-    setJournal( prev => [...prev, e])
-  }
-  function addShield( shield ) {
-    setArmory(prev => ({
-      ...prev,
-      shields: [...prev.shields, shield]
-    }))
-  }
-  function addWeapon( weapon ) {
-    setArmory(prev => ({
-      ...prev,
-      weapons: [...prev.weapons, weapon]
-    }))
-  }
   
   // getting things from the API
-  async function getEnemy( challenge=1 ) {
+  async function getEnemy( challenge=.5 ) {
     let url;
     const manyEnemies = await get(`/api/monsters?challenge_rating=${challenge}`);
     if (response.ok) {
@@ -114,6 +69,25 @@ function App() {
       addWeapon( weapon );
     }
   }
+  async function getArmor() {
+    let url;
+    const allArmor = await get('/api/equipment-categories/armor');
+    if (response.ok) {
+      let index = Math.floor( Math.random() * allArmor.equipment.length )
+      url = allArmor.equipment[index];
+    }
+    const data = await get(url);
+    if (response.ok) {
+      let armor = {
+        name: data.name,
+        desc: data.desc ?? [],
+        category: data.armor_category + ' Armor',
+        class: data.armor_class.base,
+        equipped: false
+      }
+      addArmor(armor);
+    }
+  }
 
   return (
     <div className={s.root}>
@@ -145,21 +119,13 @@ function App() {
               path="/dragon-game/"
               element={
                 <Arena
-                  player={player}
-                  setPlayer={setPlayer}
-                  enemy={enemy}
-                  setEnemy={setEnemy}
                   getEnemy={getEnemy}
-                  addShield={addShield}
-                  addArmor={addArmor}
-                  addEnemyToJournal={addEnemyToJournal}
-                  getWeapon={getWeapon}
                   loading={loading}
                 />
               }
             />
-            <Route path="/dragon-game/armory" element={<Armory armory={armory} setPlayer={setPlayer} setArmory={setArmory}/>} />
-            <Route path="/dragon-game/journal" element={<Journal journal={journal}/>} />
+            <Route path="/dragon-game/armory" element={<Armory />} />
+            <Route path="/dragon-game/journal" element={<Journal/>} />
           </Routes>
         </main>
       </Router>

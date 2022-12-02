@@ -1,11 +1,14 @@
 import { useState } from 'react'
+import { useDragonStore } from '../../DragonStore';
 import styles from './player.module.scss'
 // import Weapon from '../Weapon/Weapon';
 import Fighting from '../Fighting/Fighting';
 
 export default function Player(props) {
-    const {setEnemy, enemy} = props;
-    const {hp, level, ac, maxhp, strength, proficiencies, weapon} = props.player;
+    const enemy = useDragonStore( (store) => store.enemy );
+    const decrementEnemyHealth = useDragonStore( (store) => store.decrementEnemyHealth );
+    const {health, level, ac, maxhp, strength, proficiencies, weapon} = useDragonStore( (store) => store.player );
+
     const [fighting, setFighting] = useState(false);
     const [damage, setDamage] = useState({
         message:"",
@@ -32,10 +35,7 @@ export default function Player(props) {
             
             setTimeout(() => {
                 if (enemy.health-d > 0){
-                    setEnemy(prev => ({
-                        ...prev,
-                        health:prev.health-d,
-                    }))
+                    decrementEnemyHealth( d );
                 } else {
                     console.log("DEAD ENEMY");
                 }
@@ -99,7 +99,7 @@ export default function Player(props) {
             <meter id='player-hp'
                 min="0" max={maxhp}
                 optimum={maxhp} high={Math.floor(maxhp * (2/3))} low={Math.floor(maxhp * (1/3))}
-                value={hp}>{hp}/100
+                value={health}>{health}/100
             </meter>
         </div>
     )
