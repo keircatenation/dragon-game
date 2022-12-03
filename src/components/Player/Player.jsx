@@ -6,6 +6,8 @@ import Fighting from '../Fighting/Fighting';
 
 export default function Player(props) {
     const enemy = useDragonStore( (store) => store.enemy );
+    const rollAttack = useDragonStore( (store) => store.rollAttack );
+    const rollDamage = useDragonStore( (store) => store.rollDamage );
     const decrementEnemyHealth = useDragonStore( (store) => store.decrementEnemyHealth );
     const {health, level, ac, maxhp, strength, proficiencies, weapon} = useDragonStore( (store) => store.player );
 
@@ -18,24 +20,24 @@ export default function Player(props) {
     function attack(strength, dam, type){
         console.log("attack!", type);
 
-        let numDie = dam.match(/^\d+/)[0];
-        let dice = dam.match(/\d+$/)[0];
+        let numDice = dam.match(/^\d+/)[0];
+        let numSides = dam.match(/\d+$/)[0];
 
-        let r = attackRoll(strength);
-        console.log("attack roll: ", r, enemy.armor, enemy.health);
+        let attackRoll = rollAttack(strength);
+        console.log("attack roll: ", attackRoll, enemy.armor, enemy.health);
 
-        if (r[0] >= enemy.armor){
-            let d = damageRoll(numDie, dice, r[1]);
-            console.log("damage: ", d);
+        if (attackRoll[0] >= enemy.armor){
+            let damageRoll = rollDamage(numDice, numSides, attackRoll[1]);
+            console.log("damage: ", damageRoll);
             setDamage({
-                message:r[1],
-                num:d,
+                message:attackRoll[1],
+                num:damageRoll,
             });
             setFighting(true);
             
             setTimeout(() => {
-                if (enemy.health-d > 0){
-                    decrementEnemyHealth( d );
+                if (enemy.health - damageRoll > 0){
+                    decrementEnemyHealth( damageRoll );
                 } else {
                     console.log("DEAD ENEMY");
                 }
@@ -48,23 +50,6 @@ export default function Player(props) {
             setTimeout(() => {
                 setFighting(false);
             }, 2000);
-        }
-    }
-    function attackRoll(bonus){
-        let d20 = Math.floor(Math.random()*20)+1;
-        if (d20 == 20){
-            return [d20+bonus, "crit"]
-        } else {
-            return [d20+bonus, ""]
-        }
-    }
-    function damageRoll(num, dice, crit){
-        let damage = num * Math.floor(Math.random()*dice)+1;
-        switch(crit){
-            case "crit":
-                return damage*2;
-            default:
-                return damage;
         }
     }
 

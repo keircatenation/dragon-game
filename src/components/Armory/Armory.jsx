@@ -6,8 +6,6 @@ import Weapon from '../Weapon/Weapon';
 export default function Armory(props) {
     const armory = useDragonStore( (store) => store.armory );
     const {armor, weapons, shields} = armory;
-    const setWeapon = useDragonStore( (store) => store.setWeapon );
-
 
     return (
         <div className={s.root}>
@@ -17,7 +15,27 @@ export default function Armory(props) {
                     weapons.map( (weapon, index) => {
                         let key = `${index}+${weapon.name}`
                         return (
-                            <Weapon weapon={weapon} index={index} setWeapon={setWeapon} key={key} armory={armory}/>
+                            <Weapon weapon={weapon} index={index} key={key}/>
+                        )
+                    })
+                }
+            </div>
+            <h2>Armor</h2>
+            <div id="armor" className={s.armory}>
+                {
+                    armor.map( (arm, index) => {
+                        return (
+                            <p>{arm.name}</p>
+                        )
+                    })
+                }
+            </div>
+            <h2>Shields</h2>
+            <div id="shields" className={s.armory}>
+                {
+                    shields.map( (shield, index) => {
+                        return (
+                            <p>{shield.name}</p>
                         )
                     })
                 }

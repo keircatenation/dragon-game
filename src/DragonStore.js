@@ -40,7 +40,26 @@ export const useDragonStore = create( (set) => ( {
 
     levelUp: () => set( (state) => ( { player: { ...state.player, strength: state.player.strength + 1, level: state.player.level + 1 } } ) ),
 
-    setEnemy: ( newEnemy ) => set( (state) => ( {enemy: newEnemy} ) ),
+    rollAttack: ( bonus ) => {
+      let d20 = Math.floor(Math.random()*20)+1;
+      if (d20 == 20){
+          return [d20+bonus, "crit"]
+      } else {
+          return [d20+bonus, ""]
+      }
+    },
 
-    setWeapon: ( weapon ) => set( (state) => ( { player: { ...state.player, weapon: weapon } } ) )
+    rollDamage: ( numDice, numSides, crit ) => {
+      let damage = numDice * Math.floor(Math.random()*numSides)+1;
+      switch(crit){
+        case "crit":
+            return damage*2;
+        default:
+            return damage;
+      }
+    },
+
+    setEnemy: ( newEnemy ) => set( (state) => ( {enemy: newEnemy} ) ),
+    
+    setEquippedWeapon: ( weapon ) => set( (state) => ( { player: { ...state.player, weapon: weapon } } ) )
   } ) )

@@ -61,10 +61,10 @@ function App() {
         desc: data.desc ?? [],
         dice: data.damage?.damage_dice ?? "",
         type: data.damage?.damage_type.name ?? "",
+        atkBonus: 0,
         category: data.weapon_category ?? "",
         rarity: data.rarity ?? "",
-        properties: data.properties ?? [],
-        equipped: false
+        properties: data.properties ?? []
       }
       addWeapon( weapon );
     }
