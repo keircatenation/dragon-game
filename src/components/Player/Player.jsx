@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useDragonStore } from '../../DragonStore';
 import styles from './player.module.scss'
-// import Weapon from '../Weapon/Weapon';
 import Fighting from '../Fighting/Fighting';
 
 export default function Player(props) {
@@ -10,29 +9,27 @@ export default function Player(props) {
     const rollDamage = useDragonStore( (store) => store.rollDamage );
     const decrementEnemyHealth = useDragonStore( (store) => store.decrementEnemyHealth );
     const {health, level, ac, maxhp, strength, proficiencies, weapon} = useDragonStore( (store) => store.player );
+    const decrementPlayerHealth = useDragonStore( (store) => store.decrementPlayerHealth );
+    const fightingState = useDragonStore( (store) => store.fightingState );
+    const setFightingState = useDragonStore( (store) => store.setFightingState );
 
     const [fighting, setFighting] = useState(false);
-    const [damage, setDamage] = useState({
-        message:"",
-        num:0,
-    });
 
     function attack(strength, dam, type){
-        console.log("attack!", type);
 
-        let numDice = dam.match(/^\d+/)[0];
-        let numSides = dam.match(/\d+$/)[0];
-
+        // First, we roll our own attack
+        let dice = dam.match(/\d+/g);
         let attackRoll = rollAttack(strength);
-        console.log("attack roll: ", attackRoll, enemy.armor, enemy.health);
 
         if (attackRoll[0] >= enemy.armor){
-            let damageRoll = rollDamage(numDice, numSides, attackRoll[1]);
+            let damageRoll = rollDamage(dice[0], dice[1], attackRoll[1]);
             console.log("damage: ", damageRoll);
-            setDamage({
-                message:attackRoll[1],
-                num:damageRoll,
-            });
+            setFightingState( {
+                attack: attackRoll[0],
+                hit: true,
+                message: attackRoll[1],
+                damage: damageRoll
+            } )
             setFighting(true);
             
             setTimeout(() => {
@@ -40,23 +37,48 @@ export default function Player(props) {
                     decrementEnemyHealth( damageRoll );
                 } else {
                     console.log("DEAD ENEMY");
+                    // setisEnemyDead(true);
+                    return;
                 }
                 setFighting(false);
-                setDamage({message:"",
-                num:0,});
+                setFightingState( {
+                    attack:0,
+                    hit: false,
+                    message:'',
+                    damage:0
+                } )
             }, 2000);
         } else{
+            setFightingState( {
+                attack: attackRoll[0],
+                hit: false,
+                message: '',
+                damage: 0
+            } )
             setFighting(true);
             setTimeout(() => {
                 setFighting(false);
             }, 2000);
+        }
+
+        // now the enemy attacks back! but only if the enemy isn't dead, because we return once the enemy is dead
+        console.log( 'enemy isn\'t dead yet' )
+        let atkBonus = enemy.actions[0].attack_bonus;
+        let eAttackRoll = rollAttack(atkBonus);
+        // console.log(eAttackRoll)
+        if (eAttackRoll[0] > ac) {
+            let eDamageDice = enemy.actions[0].damage[0].damage_dice;
+            let dice = eDamageDice.match(/\d+/g);
+            let eAttackDamage = rollDamage(dice[0], dice[1], eAttackRoll[1]);
+            // console.log(eAttackDamage)
+            decrementPlayerHealth(eAttackDamage);
         }
     }
 
     return (
         <div className={styles.root}>
             {
-                fighting && <Fighting damage={damage}/>
+                fighting && <Fighting/>
             }
             <div className={styles.selected}>
                 {Object.keys(weapon).length == 0 && <p>Go to your Armory to select your weapon!</p>}

@@ -1,15 +1,17 @@
 import s from './fighting.module.scss'
+import { useDragonStore } from '../../DragonStore'
 
 export default function Fighting(props) {
-    const {damage} = props;
+    const fightingState = useDragonStore( (store) => store.fightingState )
 
     return (
         <div className={s.root}>
+            <p>Your attack roll: {fightingState.attack}</p>
             {
-                damage.num ? <p>You attack!</p> : <p>You missed :(</p>
+                fightingState.hit ? <p>You attack!</p> : <p>You missed :(</p>
             }
-            <p>{damage.message? damage.message : ""}</p>
-            <p>{damage.num? damage.num : ""}</p>
+            <p>{fightingState.message? fightingState.message : ""}</p>
+            <p>{fightingState.damage? 'Your damage: ' + fightingState.damage : ""}</p>
         </div>
     )
 

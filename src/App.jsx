@@ -22,7 +22,7 @@ function App() {
 
   
   // getting things from the API
-  async function getEnemy( challenge=.5 ) {
+  async function getEnemy( challenge=0.125 ) {
     let url;
     const manyEnemies = await get(`/api/monsters?challenge_rating=${challenge}`);
     if (response.ok) {

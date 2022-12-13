@@ -12,7 +12,7 @@ export default function Actions(props) {
                         <div className={styles.action} key={action.name}>
                             <p>{action.name}</p>
                             <p>Attack bonus: +{action.attack_bonus}</p>
-                            <p>Damage: {damages.damage_dice ?? ""} {damages.damage_type.name ?? {}}</p>
+                            <p>Damage: {damages.damage_dice ? damages.damage_dice : ""} {damages.damage_type.name ?? {}}</p>
                         </div>
                     )
                 })
