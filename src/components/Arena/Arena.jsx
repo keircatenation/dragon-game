@@ -15,7 +15,7 @@ export default function Arena( props ) {
             <div className={s.enemy}>
                 {loading && "...loading"}
                 {
-                    !enemy.name ? <button onClick={() => getEnemy()}>Get Enemy</button> : <Enemy enemy={enemy} />
+                    !enemy.name ? <button onClick={() => getEnemy()}>Get Enemy</button> : <Enemy />
                 }
             </div>
             <Player />

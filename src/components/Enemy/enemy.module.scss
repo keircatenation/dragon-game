@@ -22,3 +22,9 @@
         padding:0;
     }
 }
+
+.action {
+    border:1px solid var(--highlight);
+    padding:var(--small-gap);
+    font-size: .8rem;
+}

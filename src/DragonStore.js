@@ -11,14 +11,22 @@ export const useDragonStore = create( (set) => ( {
       armor:10,
       health:10,
       maxhp:10,
-      actions:[],
+      action:{},
       challenge:1
     },
     fightingState:{
-      attack:0,
-      hit: false,
-      message:'',
-      damage:0
+      player: {
+        attack:0,
+        hit: false,
+        message:'',
+        damage:0
+      },
+      enemy: {
+        attack:0,
+        hit: false,
+        message:'',
+        damage:0
+      }
     },
     journal : [],
     player : {
@@ -39,6 +47,19 @@ export const useDragonStore = create( (set) => ( {
     addToJournal: ( enemy ) => set( (state) => ( { journal: [...state.journal, enemy] } ) ),
 
     addWeapon: (weapon) => set( (state) => ( { armory: {...state.armory, weapons: [...state.armory.weapons, weapon]} } ) ),
+
+    clearFightingState: () => set( (state) => ( { fightingState: { player: {
+      attack:0,
+      hit: false,
+      message:'',
+      damage:0
+    },
+    enemy: {
+      attack:0,
+      hit: false,
+      message:'',
+      damage:0
+    } } } ) ),
 
     decrementEnemyHealth: (attack) => set( (state) => ( { enemy: { ...state.enemy, health: state.enemy.health - attack} } ) ),
 

@@ -42,7 +42,7 @@ function App() {
         armor: enemy.armor_class,
         health: enemy.hit_points,
         maxhp: enemy.hit_points,
-        actions: actions,
+        action: actions[0],
         challenge: challenge
       })
     }

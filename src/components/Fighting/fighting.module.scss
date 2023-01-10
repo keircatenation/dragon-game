@@ -1,12 +1,14 @@
 .root{
-    // position: absolute;
-    // z-index: 1;
-    background-color: var(--highlight);
-    color: white;
-    // top:30vh;
-    // margin:0 10vw;
-    // width: 80vw;
-    // p{
-    //     margin: var(--large-gap);
-    // }
+    position: absolute;
+    z-index: 1;
+    background-color: white;
+    border:2px solid var(--highlight);
+    color: black;
+    top:30vh;
+    width: 60vw;
+    margin:0 20vw;
+    padding:1rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap:1rem;
 }

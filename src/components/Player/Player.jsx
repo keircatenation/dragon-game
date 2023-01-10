@@ -12,6 +12,7 @@ export default function Player(props) {
     const decrementPlayerHealth = useDragonStore( (store) => store.decrementPlayerHealth );
     const fightingState = useDragonStore( (store) => store.fightingState );
     const setFightingState = useDragonStore( (store) => store.setFightingState );
+    const clearFightingState = useDragonStore( (store) => store.clearFightingState );
 
     const [fighting, setFighting] = useState(false);
 
@@ -19,60 +20,63 @@ export default function Player(props) {
 
         // First, we roll our own attack
         let dice = dam.match(/\d+/g);
-        let attackRoll = rollAttack(strength);
-
-        if (attackRoll[0] >= enemy.armor){
-            let damageRoll = rollDamage(dice[0], dice[1], attackRoll[1]);
-            console.log("damage: ", damageRoll);
-            setFightingState( {
-                attack: attackRoll[0],
-                hit: true,
-                message: attackRoll[1],
-                damage: damageRoll
-            } )
-            setFighting(true);
-            
-            setTimeout(() => {
-                if (enemy.health - damageRoll > 0){
-                    decrementEnemyHealth( damageRoll );
-                } else {
-                    console.log("DEAD ENEMY");
-                    // setisEnemyDead(true);
-                    return;
-                }
-                setFighting(false);
-                setFightingState( {
-                    attack:0,
-                    hit: false,
-                    message:'',
-                    damage:0
-                } )
-            }, 2000);
-        } else{
-            setFightingState( {
-                attack: attackRoll[0],
+        let fighting = {
+            player: {
+                attack:0,
                 hit: false,
-                message: '',
-                damage: 0
-            } )
-            setFighting(true);
-            setTimeout(() => {
-                setFighting(false);
-            }, 2000);
+                message:'',
+                damage:0
+            },
+            enemy: {
+                attack:0,
+                hit: false,
+                message:'',
+                damage:0
+            }
+        };
+
+        fighting.player.attack = rollAttack(strength);
+
+        if (fighting.player.attack[0] >= enemy.armor){
+            // if attack roll is greater than the enemy, then we roll for damages
+            fighting.player.hit = true;
+            fighting.player.damage = rollDamage(dice[0], dice[1], fighting.player.attack[1]);
+            console.log("damage: ", fighting.player.damage);
+            if (enemy.health - fighting.player.damage > 0){
+                decrementEnemyHealth( fighting.player.damage );
+            } else {
+                console.log("DEAD ENEMY");
+                // setisEnemyDead(true);
+                return;
+            }
         }
 
         // now the enemy attacks back! but only if the enemy isn't dead, because we return once the enemy is dead
         console.log( 'enemy isn\'t dead yet' )
-        let atkBonus = enemy.actions[0].attack_bonus;
-        let eAttackRoll = rollAttack(atkBonus);
-        // console.log(eAttackRoll)
-        if (eAttackRoll[0] > ac) {
-            let eDamageDice = enemy.actions[0].damage[0].damage_dice;
+        let atkBonus = enemy.action.attack_bonus;
+        fighting.enemy.attack = rollAttack(atkBonus);
+
+        if (fighting.enemy.attack[0] > ac) {
+            fighting.enemy.hit = true;
+
+            let eDamageDice = enemy.action.damage[0].damage_type ? enemy.action.damage[0].damage_dice : enemy.action.damage[0].from.options[0].damage_dice;
             let dice = eDamageDice.match(/\d+/g);
-            let eAttackDamage = rollDamage(dice[0], dice[1], eAttackRoll[1]);
+
+            fighting.enemy.damage = rollDamage(dice[0], dice[1], fighting.enemy.attack[1]);
             // console.log(eAttackDamage)
-            decrementPlayerHealth(eAttackDamage);
+            if (health - fighting.enemy.damage > 0){
+                decrementPlayerHealth(fighting.enemy.damage);
+            } else {
+                console.log("YOU DIED");
+                // setisPlayerDead(true);
+            }
         }
+        setFighting(true);
+        setFightingState(fighting);
+        setTimeout(() => {
+            setFighting(false);
+            clearFightingState();
+        }, 4000);
     }
 
     return (
