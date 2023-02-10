@@ -39,7 +39,7 @@ function App() {
       } );
       setEnemy({
         name: enemy.name,
-        armor: enemy.armor_class,
+        armor: enemy.armor_class[0].value,
         health: enemy.hit_points,
         maxhp: enemy.hit_points,
         action: actions[0],
