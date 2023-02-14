@@ -1,0 +1,19 @@
+.root{
+    position: absolute;
+    z-index: 1;
+    background-color: white;
+    border:2px solid var(--highlight);
+    color: black;
+    top:30vh;
+    width: 60vw;
+    margin:0 20vw;
+    padding:1rem;
+    button {
+        padding:1rem;
+        font-family: var(--font);
+        color: white;
+        background-color: var(--highlight);
+        border: none;
+        cursor: pointer;
+    }
+}

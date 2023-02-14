@@ -5,8 +5,7 @@ import { useDragonStore } from '../../DragonStore';
 
 
 export default function Arena( props ) {
-    const enemy = useDragonStore( (store) => store.enemy );
-    const setEnemy = useDragonStore( (store) => store.setEnemy );
+    const {enemy, setEnemy} = useDragonStore( (store) => store );
 
     const { loading, getEnemy } = props;
 

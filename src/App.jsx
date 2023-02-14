@@ -47,9 +47,9 @@ function App() {
       })
     }
   }
-  async function getWeapon( category="simple-weapons" ) {
+  async function getWeapon() {
     let url;
-    const allWeapons = await get(`/api/equipment-categories/${category}`);
+    const allWeapons = await get(`/api/equipment-categories/simple-weapons`);
     if (response.ok) {
       let index = Math.floor( Math.random()*allWeapons.equipment.length )
       url = allWeapons.equipment[index].url;
@@ -67,25 +67,6 @@ function App() {
         properties: data.properties ?? []
       }
       addWeapon( weapon );
-    }
-  }
-  async function getArmor() {
-    let url;
-    const allArmor = await get('/api/equipment-categories/armor');
-    if (response.ok) {
-      let index = Math.floor( Math.random() * allArmor.equipment.length )
-      url = allArmor.equipment[index];
-    }
-    const data = await get(url);
-    if (response.ok) {
-      let armor = {
-        name: data.name,
-        desc: data.desc ?? [],
-        category: data.armor_category + ' Armor',
-        class: data.armor_class.base,
-        equipped: false
-      }
-      addArmor(armor);
     }
   }
 

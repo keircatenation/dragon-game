@@ -28,6 +28,8 @@ export const useDragonStore = create( (set) => ( {
         damage:0
       }
     },
+    isEnemyDead: false,
+    isPlayerDead: false,
     journal : [],
     player : {
       level:1,
@@ -85,10 +87,13 @@ export const useDragonStore = create( (set) => ( {
             return damage;
       }
     },
-
     setEnemy: ( newEnemy ) => set( (state) => ( {enemy: newEnemy} ) ),
     
     setEquippedWeapon: ( weapon ) => set( (state) => ( { player: { ...state.player, weapon: weapon } } ) ),
 
-    setFightingState: ( newState ) => set( (state) => ( { fightingState: newState } ) )
+    setFightingState: ( newState ) => set( (state) => ( { fightingState: newState } ) ),
+
+    setIsEnemyDead: ( newState ) => set( state => ( { isEnemyDead: newState } ) ),
+
+    setIsPlayerDead: ( newState ) => set( state => ( { isPlayerDead: newState } ) )
   } ) )

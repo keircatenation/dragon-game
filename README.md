@@ -10,8 +10,7 @@
   - ✔️ Assign Attack and Defense stats to each dragon type
   - ✔️ "Clicks" value is replaced with HP
   - ✔️ Decrementing is the Attack minus the targeted dragon's Defense stat
-  - When a user's dragon attacks the computer's dragon, the computer's dragon attacks back
-    - can we clean up these functions?
+  - ✔️ When a user's dragon attacks the computer's dragon, the computer's dragon attacks back
   - ✔️ Deciding how to get the enemy - button to call function?
   - Handling defeating the dragon - celebration screen, button to get another enemy? or celebration message and automatic get?
     - getting Loot from defeating an enemy - roll to get a weapon or get armor

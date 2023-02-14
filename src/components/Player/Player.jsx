@@ -2,25 +2,18 @@ import { useState } from 'react'
 import { useDragonStore } from '../../DragonStore';
 import styles from './player.module.scss'
 import Fighting from '../Fighting/Fighting';
+import DeathDisplay from '../DeathDisplay/DeathDisplay';
 
 export default function Player(props) {
-    const enemy = useDragonStore( (store) => store.enemy );
-    const rollAttack = useDragonStore( (store) => store.rollAttack );
-    const rollDamage = useDragonStore( (store) => store.rollDamage );
-    const decrementEnemyHealth = useDragonStore( (store) => store.decrementEnemyHealth );
+    const { enemy, rollAttack, rollDamage, decrementEnemyHealth, decrementPlayerHealth, setFightingState, clearFightingState, isEnemyDead, setIsEnemyDead, isPlayerDead, setIsPlayerDead } = useDragonStore( (store) => store );
     const {health, level, ac, maxhp, strength, proficiencies, weapon} = useDragonStore( (store) => store.player );
-    const decrementPlayerHealth = useDragonStore( (store) => store.decrementPlayerHealth );
-    const fightingState = useDragonStore( (store) => store.fightingState );
-    const setFightingState = useDragonStore( (store) => store.setFightingState );
-    const clearFightingState = useDragonStore( (store) => store.clearFightingState );
-
-    const [fighting, setFighting] = useState(false);
+    const [isFighting, setIsFighting] = useState(false);
 
     function attack(strength, dam, type){
 
         // First, we roll our own attack
         let dice = dam.match(/\d+/g);
-        let fighting = {
+        const fighting = {
             player: {
                 attack:0,
                 hit: false,
@@ -34,7 +27,6 @@ export default function Player(props) {
                 damage:0
             }
         };
-
         fighting.player.attack = rollAttack(strength);
 
         if (fighting.player.attack[0] >= enemy.armor){
@@ -46,7 +38,7 @@ export default function Player(props) {
                 decrementEnemyHealth( fighting.player.damage );
             } else {
                 console.log("DEAD ENEMY");
-                // setisEnemyDead(true);
+                setIsEnemyDead(true);
                 return;
             }
         }
@@ -68,13 +60,14 @@ export default function Player(props) {
                 decrementPlayerHealth(fighting.enemy.damage);
             } else {
                 console.log("YOU DIED");
-                // setisPlayerDead(true);
+                setIsPlayerDead(true);
+                return;
             }
         }
-        setFighting(true);
         setFightingState(fighting);
+        setIsFighting(true);
         setTimeout(() => {
-            setFighting(false);
+            setIsFighting(false);
             clearFightingState();
         }, 4000);
     }
@@ -82,7 +75,10 @@ export default function Player(props) {
     return (
         <div className={styles.root}>
             {
-                fighting && <Fighting/>
+                isFighting && <Fighting/>
+            }
+            {
+                (isEnemyDead || isPlayerDead) && <DeathDisplay />
             }
             <div className={styles.selected}>
                 {Object.keys(weapon).length == 0 && <p>Go to your Armory to select your weapon!</p>}
